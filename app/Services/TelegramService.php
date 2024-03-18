@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Modules\Song\Models\Song;
 
 class TelegramService
 {
@@ -16,10 +19,10 @@ class TelegramService
 
         if($options !== false)
         {
-            $data['reply_markup'] = $this->createKeyboard($options);
+            $data['reply_markup'] = $this->createInlineKeyboard($options);
         }
 
-        return Http::post($url , $data)->json();
+        $respone = Http::post($url , $data)->json();
     }
 
     public function createKeyboard($options)
@@ -47,15 +50,57 @@ class TelegramService
         ];
     }
 
-    public function audio($user)
+    public function createInlineKeyboard()
+    {
+        return [
+            'inline_keyboard' => [
+                [
+                    ['text' => 'test','callback_data' => 'بمون'],
+                    ['text' => 'test3' , 'callback_data' => '2']
+                ],
+                [
+                    ['text' => 'test2','callback_data' => '3'],
+                    ['text' => 'test4' , 'callback_data' => '4']
+                ],
+            ],
+            'resize_keyboard' => true
+        ];
+    }
+
+    public function audio(User $user , Song $song)
+    {
+        $response = $this->sendSongToUser($user,$song);
+
+        if ($response->successful())
+        {
+            if (is_null($song->file_id))
+                $song->update([
+                    "file_id" => $response->json()["result"]["audio"]["file_id"]
+                ]);
+        }
+        else
+        {
+            if($response->json()["error_code"] == 400)
+            {
+                $song->update([
+                    "file_id" => null
+                ]);
+
+                $this->sendSongToUser($user,$song);
+            }
+        }
+    }
+
+    private function sendSongToUser(User $user , Song $song)
     {
         $url = env('BOT_API') . env('BOT_TOKEN') . '/sendAudio';
         $data = [
             'chat_id' => $user->telegram_id,
-            'audio' => 'https://dl.bir-music.com/1398/12/21/Daniyal%20(Dayan)%20-%20Khasteh%20Shodam/Daniyal%20(Dayan)%20-%20Khasteh%20Shodam.mp3',
-            'title' => 'Dayan – Khasteh Shodam',
-            'caption' => 'Dayan – Khasteh Shodam',
+            'audio' => $song->file_id ?? $song->url->url,
+            'title' => $song->name_en,
+            'caption' => $song->name_en,
         ];
-        return Http::post($url , $data)->json();
+
+        return Http::post($url , $data);
     }
 }

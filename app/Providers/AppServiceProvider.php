@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\SearchService;
 use App\Services\TelegramService;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('telegram' , function (){
             return new TelegramService();
+        });
+        $this->app->bind("search" , function (){
+            return new SearchService();
         });
     }
 

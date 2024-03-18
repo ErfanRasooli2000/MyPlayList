@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['telegram' => \App\Facades\Telegram::class]);
+        $middleware->alias([
+            'telegram' => \App\Facades\Telegram::class,
+            'search' => \App\Facades\Search::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
