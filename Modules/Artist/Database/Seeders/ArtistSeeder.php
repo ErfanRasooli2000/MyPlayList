@@ -61,7 +61,74 @@ class ArtistSeeder extends Seeder
                 "name_fa" => "تی دی",
                 "name_en" => "T-Dey",
             ],
-
+            [
+                "name_fa" => "امیر تتلو",
+                "name_en" => "Amir Tataloo",
+            ],
+            [
+                "name_fa" => "یاس",
+                "name_en" => "yas",
+            ],
+            [
+                "name_fa" => "کورش",
+                "name_en" => "Koorosh",
+            ],
+            [
+                "name_fa" => null,
+                "name_en" => "021kid",
+            ],
+            [
+                "name_fa" => "سمی لو",
+                "name_en" => "Sami Low",
+            ],
+            [
+                "name_fa" => "آرتا",
+                "name_en" => "Arta",
+            ],
+            [
+                "name_fa" => "آرون",
+                "name_en" => "Arown",
+            ],
+            [
+                "name_fa" => "بنجی",
+                "name_en" => "Benji",
+            ],
+            [
+                "name_fa" => "بهزاد لیتو",
+                "name_en" => "Behzad Leito",
+            ],
+            [
+                "name_fa" => "کچی بیتز",
+                "name_en" => "Catchybeatz",
+            ],
+            [
+                "name_fa" => "رها",
+                "name_en" => "Raha",
+            ],
+            [
+                "name_fa" => "سیجل",
+                "name_en" => "Sijal",
+            ],
+            [
+                "name_fa" => "تمارا",
+                "name_en" => "Tamara",
+            ],
+            [
+                "name_fa" => null,
+                "name_en" => "Scott Storch",
+            ],
+            [
+                "name_fa" => "سهراب ام جی",
+                "name_en" => "Sohrab Mj",
+            ],
+            [
+                "name_fa" => "سپهر خلسه",
+                "name_en" => "Sepehr Khalse",
+            ],
+            [
+                "name_fa" => "پندار",
+                "name_en" => "Pendar",
+            ],
         ];
 
         Artist::insert($data);

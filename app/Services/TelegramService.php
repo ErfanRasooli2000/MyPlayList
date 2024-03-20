@@ -19,7 +19,7 @@ class TelegramService
 
         if($options !== false)
         {
-            $data['reply_markup'] = $this->createInlineKeyboard($options);
+            $data['reply_markup'] = $this->createKeyboard($options);
         }
 
         $respone = Http::post($url , $data)->json();
@@ -50,19 +50,52 @@ class TelegramService
         ];
     }
 
-    public function createInlineKeyboard()
+    public function sendSearchResult(User $user,$result)
     {
-        return [
-            'inline_keyboard' => [
+        $url = env('BOT_API') . env('BOT_TOKEN') . '/sendMessage';
+
+        Http::post($url , [
+            'chat_id' => $user->telegram_id,
+            'text' => "انتخاب کنید",
+            'reply_markup' => $this->createInlineKeyboard($result)
+        ])->json();
+
+    }
+    private function createInlineKeyboard($result)
+    {
+        $keyboard = [];
+
+        foreach ($result as $item)
+        {
+            $keyboard[] = [
                 [
-                    ['text' => 'test','callback_data' => 'بمون'],
-                    ['text' => 'test3' , 'callback_data' => '2']
-                ],
-                [
-                    ['text' => 'test2','callback_data' => '3'],
-                    ['text' => 'test4' , 'callback_data' => '4']
-                ],
+                    "text" => $item->artists->first()->name_en . " - " .$item->name_en,
+                    "callback_data" => $item->id
+                ]
+            ];
+        }
+
+        $keyboard[] = [
+            [
+                "text" => "تست اندازه",
+                "callback_data" => "2",
             ],
+            [
+                "text" => "تست اندازه",
+                "callback_data" => "2",
+            ],
+            [
+                "text" => "تست اندازه",
+                "callback_data" => "2",
+            ],
+            [
+                "text" => "تست اندازه",
+                "callback_data" => "2",
+            ],
+        ];
+
+        return [
+            'inline_keyboard' => $keyboard,
             'resize_keyboard' => true
         ];
     }

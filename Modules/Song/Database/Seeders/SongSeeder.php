@@ -21,7 +21,7 @@ class SongSeeder extends Seeder
                 "name_fa" => "پسرم",
                 "name_en" => "Pesaram",
                 "url" => $prefix . "Daniyal/Keder/" . rawurlencode("01 - Daniyal - Pesaram (FT. Taniya) .mp3"),
-                "artists" => [1,7]
+                "artists" => [1,7],
             ],
             [
                 "name_fa" => "سهم قشر ما",
@@ -454,6 +454,228 @@ class SongSeeder extends Seeder
                 "name_en" => "Eshtebah",
                 "url" => $prefix . "Bahram/Eshtebahe%20Khoob/" . rawurlencode("16.Eshtebah.mp3"),
                 "artists" => [10]
+            ],
+            [
+                "name_fa" => "افعی",
+                "name_en" => "Afe",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Afee.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "امیر تتلو",
+                "name_en" => "Amir Tataloo",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Amir%20Tataloo.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "احترام",
+                "name_en" => "Ehteram",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Ehteram.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "قسم",
+                "name_en" => "Ghasam",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Ghasam.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "حرمسرا",
+                "name_en" => "HaramSara",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20HaramSara.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "خانوم وزیری",
+                "name_en" => "Khanoome Vaziri",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Khanoome%20Vaziri.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "خایه باقر",
+                "name_en" => "Khayeye Bagher",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Khayeye%20Bagher.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "ممه های گلشیفته",
+                "name_en" => "Mamehaye Golshifteh",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Mamehaye%20Golshifteh.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "اون دیگه نمیتونه",
+                "name_en" => "Oon Dige Nemitoone",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Oon%20Dige%20Nemitoone.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "شب ۲",
+                "name_en" => "Shab 2",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Shab%202.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "تازیانه",
+                "name_en" => "Taziyaneh",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Amir%20Tataloo%20-%20Taziyaneh.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "بزنم نفت در بیاد",
+                "name_en" => "Bezanam Naft Dar Biad",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Gardane%20Man%20Nandaz.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "در واقع",
+                "name_en" => "Dar Vaghe",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Dar%20Vaghe.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "کی مثل من",
+                "name_en" => "Ki Mesle Man",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Duzakh%20Ft%20Tataloo%20-%20Ki%20Mesle%20Man.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "گردن من نندار",
+                "name_en" => "Gardane Man Nandaz",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Gardane%20Man%20Nandaz.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "جمعه ها",
+                "name_en" => "Jomeha",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Jomeha.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "خلسه",
+                "name_en" => "Khalse",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Khalse.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "کی مثل تو",
+                "name_en" => "Ki Mesle To",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Ki%20Mesle%20To.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "مال من باش",
+                "name_en" => "Male Man Bash",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Male%20Man%20Bash.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "من ۳",
+                "name_en" => "Man 3",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Man%203.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "من به کم راضی نیستم",
+                "name_en" => "Man Be Kam Razi Nistam",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Man%20Be%20Kam%20Razi%20Nistam.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "پریشب",
+                "name_en" => "Parishab",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Parishab.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "گرگ ۲",
+                "name_en" => "Gorg 2",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Sohrab%20MJ%20Ft.%20Amir%20Tataloo%20-%20Gorg%202.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "مستر لوده",
+                "name_en" => "Mr.Lodeh",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Sohrab%20Mj%20Ft.%20Sepehr%20Khalse%20Ft.%20Amir%20Tataloo%20-%20Mr.Lodeh.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "ولش کن",
+                "name_en" => "Velesh Kon",
+                "url" => "https://dl.seesound.ir/Music/Hip-Hop/Tataloo/Album/12-78%20(2019.2020)/Velesh%20Kon.mp3",
+                "artists" => [13]
+            ],
+            [
+                "name_fa" => "اکلیل سرنج",
+                "name_en" => "Aklil Soranj",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & 021kid & Sami Low - Aklil Soranj.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "آمبولانس",
+                "name_en" => "Ambulance",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Arta & Sami Low - Ambulance.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "فرست کلاس",
+                "name_en" => "First Class",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Arown & Sami Low & Benji - First Class.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "افتر",
+                "name_en" => "After",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Behzad Leito & Catchybeatz & Arta & Sami Low - After.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "هیولا",
+                "name_en" => "Hayula",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Sami Low & Raha - Hayula.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "اکستازی",
+                "name_en" => "Extasy",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Sami Low & Sijal & Raha - Extasy.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "سویج رز",
+                "name_en" => "Savage Rose",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Sami Low & Tamara - Savage Rose.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "نشو ازم دور",
+                "name_en" => "Nasho Azam Door",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Sami Low - Nasho Azam Door.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "کوالا",
+                "name_en" => "Koala",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Scott Storch & Sohrab Mj & Sepehr Khalse & Sami Low - Koala.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "تهران تا ال ای",
+                "name_en" => "Tehran Ta LA",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & Sepehr Khalse & Pendar & Sami Low - Tehran Ta La.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => "بازیگر",
+                "name_en" => "Bazigar",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh & The Don & Sami Low - Bazigar.mp3"),
+                "artists" => [15]
+            ],
+            [
+                "name_fa" => null,
+                "name_en" => "Raw",
+                "url" => $prefix . "korosh/420-vol2/" . rawurlencode("Koorosh - Raw (Outro).mp3"),
+                "artists" => [15]
             ],
         ];
 

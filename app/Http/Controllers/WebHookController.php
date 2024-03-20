@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Facades\Telegram;
 use App\Facades\Search;
 use Illuminate\Support\Facades\Log;
+use Modules\Song\Models\Song;
 
 class WebHookController extends Controller
 {
@@ -23,6 +24,11 @@ class WebHookController extends Controller
             $message = $result["data"];
             $user_telegram_id = $result["message"]["chat"]["id"];
 
+            Telegram::audio(
+                $this->getUserById($user_telegram_id),
+                Song::where("id" , $message)->first()
+            );
+
             return 1;
         }
 
@@ -32,15 +38,16 @@ class WebHookController extends Controller
         if ($message->chat->type === 'private')
         {
             $user = $this->getUser($message);
-            $data = Search::search($message->text);
+            $result = Search::search($message->text);
 
-            if (!$data)
+            if (count($result) == 0)
             {
-                Telegram::sendMsg($user , "موزیکی یافت نشد");
-                die();
+                Telegram::sendMsg($user , "فایلی یافت نشد.");
+                return 1;
             }
 
-            Telegram::audio($user , $data);
+            Telegram::sendSearchResult($user , $result);
+            return 1;
         }
     }
 
@@ -48,7 +55,7 @@ class WebHookController extends Controller
     {
         $last_name = $message->user->last_name ?? '';
         $user_id = (string) $message->user->id;
-        $user = User::where("telegram_id", $user_id)->get()->first();
+        $user = $this->getUserById($user_id);
 
         if (is_null($user))
             $user = User::create([
@@ -58,6 +65,11 @@ class WebHookController extends Controller
             ]);
 
         return $user;
+    }
+
+    private function getUserById($id)
+    {
+        return User::where("telegram_id", (string) $id)->get()->first();
     }
 }
 
