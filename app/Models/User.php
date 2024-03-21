@@ -21,4 +21,8 @@ class User extends Authenticatable
         'username',
     ];
 
+    public static function getUserById($id)
+    {
+        return User::where("telegram_id", (string) $id)->get()->first();
+    }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Modules\Keyboard\Enums\KeyboardTypeEnum;
+use Modules\Keyboard\Http\Controllers\KeyboardController;
+use Modules\Keyboard\Models\Keyboard;
 use Modules\Song\Models\Song;
 
 class TelegramService
@@ -50,57 +54,29 @@ class TelegramService
         ];
     }
 
-    public function sendSearchResult(User $user,$result)
+    public function sendSearchResult(User $user , $result , $text)
     {
         $url = env('BOT_API') . env('BOT_TOKEN') . '/sendMessage';
 
-        Http::post($url , [
+        $keyboard = new KeyboardController();
+
+        $response = Http::post($url , [
             'chat_id' => $user->telegram_id,
             'text' => "انتخاب کنید",
-            'reply_markup' => $this->createInlineKeyboard($result)
-        ])->json();
+            'reply_markup' => $keyboard->createSearchResultKeyboard($result)
+        ]);
 
-    }
-    private function createInlineKeyboard($result)
-    {
-        $keyboard = [];
+        $keyboard->createKeyboardDb(
+            $response->json()["result"]["message_id"],
+            $user,
+            KeyboardTypeEnum::SearchResult->value,
+            ["message" => $text],
+        );
 
-        foreach ($result as $item)
-        {
-            $keyboard[] = [
-                [
-                    "text" => $item->artists->first()->name_en . " - " .$item->name_en,
-                    "callback_data" => $item->id
-                ]
-            ];
-        }
-
-        $keyboard[] = [
-            [
-                "text" => "تست اندازه",
-                "callback_data" => "2",
-            ],
-            [
-                "text" => "تست اندازه",
-                "callback_data" => "2",
-            ],
-            [
-                "text" => "تست اندازه",
-                "callback_data" => "2",
-            ],
-            [
-                "text" => "تست اندازه",
-                "callback_data" => "2",
-            ],
-        ];
-
-        return [
-            'inline_keyboard' => $keyboard,
-            'resize_keyboard' => true
-        ];
+        return $response->json();
     }
 
-    public function audio(User $user , Song $song)
+    public function sendAudio(User $user , Song $song)
     {
         $response = $this->sendSongToUser($user,$song);
 
@@ -134,6 +110,53 @@ class TelegramService
             'caption' => $song->name_en,
         ];
 
+        $response = Http::post($url , $data);
+        return $response;
+    }
+
+    public function answerCallBackQuery(User $user , $callBackQueryId , $message , $alert = false)
+    {
+        $url = env('BOT_API') . env('BOT_TOKEN') . '/answerCallbackQuery';
+        $data = [
+            'callback_query_id' => $callBackQueryId,
+            'text' => $message,
+            'show_alert' => $alert,
+        ];
+
         return Http::post($url , $data);
+    }
+
+    public function editInlineMessage(User $user , $message_id , $message)
+    {
+
+        $url = env('BOT_API') . env('BOT_TOKEN') . '/editMessageText';
+
+        $keyboardControll = new KeyboardController();
+        $keyboard = Keyboard::where("user_id" , $user->id)->where("message_id" , $message_id)->first();
+
+        $response = Http::post($url , [
+            'chat_id' => $user->telegram_id,
+            'message_id' => $message_id,
+            'text' => "انتخاب کنید",
+            'reply_markup' => $keyboardControll->createSearchResultKeyboard(Search::search(json_decode($keyboard->data , true)['message']) , $message["page"])
+        ]);
+
+
+        return $response->json();
+    }
+
+    public function deleteMessages(User $user , $message_id)
+    {
+        $url = env('BOT_API') . env('BOT_TOKEN') . '/deleteMessages';
+
+        $response = Http::post($url , [
+            'chat_id' => $user->telegram_id,
+            'message_ids' => [$message_id],
+        ]);
+
+        if ($response->successful())
+            Keyboard::where("user_id" , $user->id)->where("message_id" , $message_id)->first()->delete();
+
+        return $response->json();
     }
 }

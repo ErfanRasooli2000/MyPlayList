@@ -70,11 +70,11 @@ class ArtistSeeder extends Seeder
                 "name_en" => "yas",
             ],
             [
-                "name_fa" => "کورش",
+                "name_fa" => "کوروش",
                 "name_en" => "Koorosh",
             ],
             [
-                "name_fa" => null,
+                "name_fa" => "021kid",
                 "name_en" => "021kid",
             ],
             [
@@ -114,7 +114,7 @@ class ArtistSeeder extends Seeder
                 "name_en" => "Tamara",
             ],
             [
-                "name_fa" => null,
+                "name_fa" => "اسکات استورچ",
                 "name_en" => "Scott Storch",
             ],
             [

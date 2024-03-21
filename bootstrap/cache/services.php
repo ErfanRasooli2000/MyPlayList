@@ -30,8 +30,10 @@
     26 => 'Termwind\\Laravel\\TermwindServiceProvider',
     27 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     28 => 'App\\Providers\\AppServiceProvider',
-    29 => 'Modules\\Artist\\Providers\\ArtistServiceProvider',
-    30 => 'Modules\\Song\\Providers\\SongServiceProvider',
+    29 => 'Modules\\Album\\Providers\\AlbumServiceProvider',
+    30 => 'Modules\\Artist\\Providers\\ArtistServiceProvider',
+    31 => 'Modules\\Song\\Providers\\SongServiceProvider',
+    32 => 'Modules\\Keyboard\\Providers\\KeyboardServiceProvider',
   ),
   'eager' => 
   array (
@@ -50,8 +52,10 @@
     12 => 'Termwind\\Laravel\\TermwindServiceProvider',
     13 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     14 => 'App\\Providers\\AppServiceProvider',
-    15 => 'Modules\\Artist\\Providers\\ArtistServiceProvider',
-    16 => 'Modules\\Song\\Providers\\SongServiceProvider',
+    15 => 'Modules\\Album\\Providers\\AlbumServiceProvider',
+    16 => 'Modules\\Artist\\Providers\\ArtistServiceProvider',
+    17 => 'Modules\\Song\\Providers\\SongServiceProvider',
+    18 => 'Modules\\Keyboard\\Providers\\KeyboardServiceProvider',
   ),
   'deferred' => 
   array (

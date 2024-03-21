@@ -22,7 +22,14 @@ class SearchService
                     ], "LIKE", "%" . $text . "%");
                 });
             })
-            ->limit(5)
+            ->orWhere(function ($query) use ($text){
+                $query->whereHas("album" , function ($q) use ($text) {
+                    $q->whereAny([
+                        "name_en",
+                        "name_fa",
+                    ], "LIKE", "%" . $text . "%");
+                });
+            })
             ->get();
     }
 }

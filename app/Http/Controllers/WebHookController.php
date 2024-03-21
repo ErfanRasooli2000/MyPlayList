@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Facades\Telegram;
 use App\Facades\Search;
 use Illuminate\Support\Facades\Log;
+use Modules\Keyboard\Services\KeyboardActionHandle;
 use Modules\Song\Models\Song;
 
 class WebHookController extends Controller
@@ -20,15 +21,8 @@ class WebHookController extends Controller
 
         if (isset($request["callback_query"]))
         {
-            $result = $request->toArray()["callback_query"];
-            $message = $result["data"];
-            $user_telegram_id = $result["message"]["chat"]["id"];
-
-            Telegram::audio(
-                $this->getUserById($user_telegram_id),
-                Song::where("id" , $message)->first()
-            );
-
+            $action = new KeyboardActionHandle();
+            $action->reciveCallBack($request->toArray()["callback_query"]);
             return 1;
         }
 
@@ -46,7 +40,7 @@ class WebHookController extends Controller
                 return 1;
             }
 
-            Telegram::sendSearchResult($user , $result);
+            Telegram::sendSearchResult($user , $result , $message->text);
             return 1;
         }
     }
@@ -55,7 +49,7 @@ class WebHookController extends Controller
     {
         $last_name = $message->user->last_name ?? '';
         $user_id = (string) $message->user->id;
-        $user = $this->getUserById($user_id);
+        $user = User::getUserById($user_id);
 
         if (is_null($user))
             $user = User::create([
@@ -65,11 +59,6 @@ class WebHookController extends Controller
             ]);
 
         return $user;
-    }
-
-    private function getUserById($id)
-    {
-        return User::where("telegram_id", (string) $id)->get()->first();
     }
 }
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name_fa")->nullable();
             $table->string("name_en")->nullable();
             $table->string("file_id")->nullable();
+            $table->foreignIdFor(\Modules\Album\Models\Album::class , 'album_id')->nullable()->constrained("albums")->nullOnDelete();
             $table->timestamps();
         });
 
