@@ -7,9 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Facades\Telegram;
 use App\Facades\Search;
-use Illuminate\Support\Facades\Log;
+use Modules\Keyboard\Enums\KeyboardTypeEnum;
+use Modules\Keyboard\Http\Controllers\KeyboardController;
 use Modules\Keyboard\Services\KeyboardActionHandle;
-use Modules\Song\Models\Song;
 
 class WebHookController extends Controller
 {
@@ -36,11 +36,20 @@ class WebHookController extends Controller
 
             if (count($result) == 0)
             {
-                Telegram::sendMsg($user , "فایلی یافت نشد.");
+                Telegram::sendMsg($user , "فایلی یافت نشد." );
                 return 1;
             }
 
-            Telegram::sendSearchResult($user , $result , $message->text);
+            $keyboard = new KeyboardController();
+            $response = Telegram::sendMsg($user , "انتخاب کنید." , $keyboard->createSearchResultKeyboard($result));
+
+            $keyboard->createKeyboardDb(
+                $response->json()["result"]["message_id"],
+                $user,
+                KeyboardTypeEnum::SearchResult->value,
+                ["message" => $message->text],
+            );
+
             return 1;
         }
     }

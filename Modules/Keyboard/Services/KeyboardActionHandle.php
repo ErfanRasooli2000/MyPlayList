@@ -2,10 +2,13 @@
 
 namespace Modules\Keyboard\Services;
 
+use App\Facades\Search;
 use App\Facades\Telegram;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Modules\Keyboard\Enums\CallBackTypeEnum;
+use Modules\Keyboard\Http\Controllers\KeyboardController;
+use Modules\Keyboard\Models\Keyboard;
 use Modules\Song\Models\Song;
 
 class KeyboardActionHandle
@@ -20,20 +23,65 @@ class KeyboardActionHandle
         switch ($message["type"]){
             case CallBackTypeEnum::SendMusic->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال موزیک." , true);
-                Telegram::sendAudio($user , Song::where("id" , $message)->first());
+                $this->sendAudio($user , $message);
                 break;
             case CallBackTypeEnum::ChangePage->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال جا به جایی.");
-                Telegram::editInlineMessage($user , $message_id , $message);
+                $this->changePageMessage($user , $message_id , $message);
                 break;
             case CallBackTypeEnum::CloseKeyboard->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "closing");
-                Telegram::deleteMessages($user , $message_id);
+                $this->deleteMessage($user , $message_id);
                 break;
             case CallBackTypeEnum::NoAction->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "paging");
                 break;
         }
         return 1;
+    }
+
+    public function sendAudio($user , $message)
+    {
+        $song = Song::where("id" , $message)->first();
+        $response = Telegram::sendAudio($user , $song);
+
+        if ($response->successful())
+        {
+            if (is_null($song->file_id))
+                $song->update([
+                    "file_id" => $response->json()["result"]["audio"]["file_id"]
+                ]);
+        }
+        else
+        {
+            if($response->json()["error_code"] == 400)
+            {
+                $song->update([
+                    "file_id" => null
+                ]);
+
+                Telegram::sendAudio($user , $song);
+            }
+        }
+    }
+
+    public function changePageMessage($user , $message_id , $message)
+    {
+        $keyboardController = new KeyboardController();
+        $keyboardData = Keyboard::where("user_id" , $user->id)->where("message_id" , $message_id)->first();
+        $keyboardMessage = json_decode($keyboardData->data , true)['message'];
+        $result = Search::search($keyboardMessage);
+        $keyboard = $keyboardController->createSearchResultKeyboard($result , $message["page"]);
+
+        Telegram::editInlineMessage($user , $message_id , "انتخاب کنید" , $keyboard);
+    }
+
+    public function deleteMessage($user , $message_id)
+    {
+        $response = Telegram::deleteMessages($user , $message_id);
+
+        if ($response->successful())
+            Keyboard::where("user_id" , $user->id)->where("message_id" , $message_id)->first()->delete();
+
     }
 }

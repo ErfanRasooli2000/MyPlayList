@@ -38,9 +38,6 @@ class KeyboardController extends Controller
 
     private function createPagination($current , $count)
     {
-        if ($count <= 5)
-            return null;
-
         $pageCount = $count%5 == 0 ? $count/5 : ($count - $count % 5)/ 5 + 1;
 
         return [
@@ -81,5 +78,30 @@ class KeyboardController extends Controller
             'type' => $type,
             'data' => json_encode($data),
         ]);
+    }
+
+    public function createSimpleKeyboard($options)
+    {
+        if($options == [])
+        {
+            return ['remove_keyboard' => true];
+        }
+
+        $keyboard = [];
+
+        foreach ($options as $option) {
+            $data = [];
+
+            foreach ($option as $value)
+            {
+                $data[] = ['text' => $value];
+            }
+            $keyboard[] = $data;
+        }
+
+        return [
+            'keyboard' => $keyboard,
+            'resize_keyboard' => true
+        ];
     }
 }
