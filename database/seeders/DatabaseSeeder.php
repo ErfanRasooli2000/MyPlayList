@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Modules\Album\Database\Seeders\AlbumSeeder;
 use Modules\Artist\Database\Seeders\ArtistSeeder;
+use Modules\PanelUser\Database\Seeders\PanelUserSeeder;
 use Modules\Song\Database\Seeders\SongSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ArtistSeeder::class,
             SongSeeder::class,
-            AlbumSeeder::class
+            AlbumSeeder::class,
+            PanelUserSeeder::class,
         ]);
     }
 }

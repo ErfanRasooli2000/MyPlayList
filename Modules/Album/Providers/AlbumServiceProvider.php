@@ -9,13 +9,11 @@ class AlbumServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->register(AlbumRepositoryServiceProvider::class);
+
         $this->loadMigrationsFrom(__DIR__ . "/../Database/Migrations");
 
-//        Route::group(__DIR__ . '/../Routes/api.php');
+        Route::prefix("api/v1/albums")
+            ->group(__DIR__ . '/../Routes/api.php');
     }
-    public function boot()
-    {
-
-    }
-
 }
