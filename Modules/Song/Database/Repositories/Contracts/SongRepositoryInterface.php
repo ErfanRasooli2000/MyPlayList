@@ -12,4 +12,6 @@ interface SongRepositoryInterface
 
 
     public function update(Song $song, mixed $validated);
+
+    public function groupCreate(array $data);
 }

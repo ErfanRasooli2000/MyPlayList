@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('music_lyrics', function (Blueprint $table) {
             $table->id();
-            $table->longText("lyric");
+            $table->longText("lyric")->nullable();
             $table->foreignIdFor(\Modules\Song\Models\Song::class , 'song_id')->constrained("songs")->cascadeOnDelete();
             $table->timestamps();
         });

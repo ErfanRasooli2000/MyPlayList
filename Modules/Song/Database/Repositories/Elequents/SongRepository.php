@@ -63,4 +63,30 @@ class SongRepository implements SongRepositoryInterface
             $song->artists()->sync($validated["artists"]);
         });
     }
+
+    public function groupCreate(array $excel)
+    {
+        $count = 0;
+
+        DB::transaction(function () use ($excel,&$count){
+            foreach ($excel as $row)
+            {
+                if (is_null($row[1]))
+                    continue;
+
+                $this->create([
+                    "name_fa" => $row[0],
+                    "name_en" => $row[1],
+                    "album" => $row[2],
+                    "artists" => explode("," , $row[3]),
+                    "url" => $row[4],
+                    "lyrics" => null,
+                ]);
+
+                $count++;
+            }
+        });
+
+        return $count;
+    }
 }

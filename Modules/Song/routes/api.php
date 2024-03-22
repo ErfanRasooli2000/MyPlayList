@@ -9,4 +9,6 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::post("create" , [SongController::class , 'create']);
     Route::get("show/{song}" , [SongController::class , 'show']);
     Route::put("update/{song}" , [SongController::class , 'update']);
+
+    Route::post('group-create' , [SongController::class , 'groupCreate']);
 });
