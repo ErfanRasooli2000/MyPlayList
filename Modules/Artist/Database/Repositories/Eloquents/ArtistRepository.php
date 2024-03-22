@@ -29,4 +29,9 @@ class ArtistRepository implements ArtistRepositoryInterface
     {
         return $artist->update($validated);
     }
+
+    public function getForSelect()
+    {
+        return $this->model->get();
+    }
 }

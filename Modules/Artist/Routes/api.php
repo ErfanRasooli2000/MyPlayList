@@ -11,4 +11,5 @@ Route::middleware("auth:sanctum")->group(function (){
     Route::get("show/{artist}" , [ArtistController::class , 'show']);
     Route::put("update/{artist}" , [ArtistController::class , 'update']);
 
+    Route::get('get-for-select' , [ArtistController::class , 'getForSelect']);
 });

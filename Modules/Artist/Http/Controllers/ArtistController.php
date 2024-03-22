@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\Artist\Database\Repositories\Contracts\ArtistRepositoryInterface;
 use Modules\Artist\Http\Requests\ArtistCreateRequest;
 use Modules\Artist\Http\Resources\ArtistResource;
+use Modules\Artist\Http\Resources\ArtistSelectResource;
 use Modules\Artist\Models\Artist;
 
 class ArtistController extends Controller
@@ -47,5 +48,12 @@ class ArtistController extends Controller
         $this->artistRepository->create($request->validated());
 
         return $this->successResponse(null , 201 , "آرتیست با موفقیت ساخته شد");
+    }
+
+    public function getForSelect()
+    {
+        return $this->successResponse(
+            ArtistSelectResource::collection($this->artistRepository->getForSelect())
+        );
     }
 }

@@ -10,4 +10,6 @@ interface AlbumRepositoryInterface
     public function create(mixed $validated);
 
     public function update(\Modules\Album\Models\Album $album, mixed $validated);
+
+    public function getForSelect();
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\Album\Database\Repositories\Contracts\AlbumRepositoryInterface;
 use Modules\Album\Http\Requests\AlbumCreateRequest;
 use Modules\Album\Http\Resources\AlbumResource;
+use Modules\Album\Http\Resources\AlbumSelectResource;
 use Modules\Album\Models\Album;
 
 class AlbumController extends Controller
@@ -46,5 +47,12 @@ class AlbumController extends Controller
         $this->albumRepository->update($album , $request->validated());
 
         return $this->successResponse(null , 201 , "آلبوم با موفقیت به روز شد");
+    }
+
+    public function getForSelect()
+    {
+        return $this->successResponse(
+            AlbumSelectResource::collection($this->albumRepository->getForSelect())
+        );
     }
 }

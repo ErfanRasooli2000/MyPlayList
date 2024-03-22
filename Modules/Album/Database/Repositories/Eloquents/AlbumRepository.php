@@ -29,4 +29,10 @@ class AlbumRepository implements AlbumRepositoryInterface
     {
         return $album->update($validated);
     }
+
+
+    public function getForSelect()
+    {
+        return $this->model->get();
+    }
 }

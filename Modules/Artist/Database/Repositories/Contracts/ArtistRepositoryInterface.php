@@ -10,4 +10,5 @@ interface ArtistRepositoryInterface
 
     public function update(\Modules\Artist\Models\Artist $artist, mixed $validated);
 
+    public function getForSelect();
 }
