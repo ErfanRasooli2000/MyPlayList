@@ -25,7 +25,7 @@ class Song extends Model
 
     public function lyric()
     {
-        return $this->hasMany(MusicLyric::class , 'song_id');
+        return $this->hasOne(MusicLyric::class , 'song_id');
     }
 
     public function artists()

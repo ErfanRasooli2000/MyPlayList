@@ -29,33 +29,18 @@ class SongRepository implements SongRepositoryInterface
     public function create(mixed $validated)
     {
         DB::transaction(function () use ($validated){
+
             $song = $this->model->create([
                 'name_fa' => $validated["name_fa"],
                 'name_en' => $validated["name_en"],
                 'album_id' => $validated["album"],
             ]);
 
-            $this->url->create([
-                'song_id' => $song->id,
-                'url' => $validated["url"]
-            ]);
+            $song->url()->create(['url' => $validated["url"]]);
 
-            $this->lyric->create([
-                'song_id' => $song->id,
-                'lyric' => $validated["lyrics"]
-            ]);
+            $song->lyric()->create(['lyric' => $validated["lyrics"]]);
 
-            $artists = [];
-
-            foreach ($validated["artists"] as $item)
-            {
-                $artists[] = [
-                    'song_id' => $song->id,
-                    'artist_id' => $item
-                ];
-            }
-
-            DB::table('song-artist')->insert($artists);
+            $song->artists()->sync($validated["artists"]);
         });
 
         return true;
@@ -63,6 +48,19 @@ class SongRepository implements SongRepositoryInterface
 
     public function update(Song $song, mixed $validated)
     {
+        DB::transaction(function () use ($song , $validated){
 
+            $song->update([
+                'name_fa' => $validated["name_fa"],
+                'name_en' => $validated["name_en"],
+                'album_id' => $validated["album"],
+            ]);
+
+            $song->url()->update(['url' => $validated["url"]]);
+
+            $song->lyric()->update(['lyric' => $validated["lyrics"]]);
+
+            $song->artists()->sync($validated["artists"]);
+        });
     }
 }

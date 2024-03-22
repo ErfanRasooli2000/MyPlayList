@@ -22,7 +22,7 @@ class SongResource extends JsonResource
             'name_fa' => $this->name_fa,
             'name_en' => $this->name_en,
             'lyric' => $this->whenLoaded("lyric" , function (){
-                return $this->lyric->first()->lyric;
+                return $this->lyric?->lyric;
             }),
             'artist' => $this->whenLoaded("artists" , function (){
                 return ArtistSelectResource::collection($this->artists);
