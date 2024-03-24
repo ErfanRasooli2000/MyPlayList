@@ -46,20 +46,20 @@ class KeyboardController extends Controller
 
         return [
             [
-                "text" => "   ⏮   ",
+                "text" => "⬅️",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::ChangePage->value,
                     "page" => $current == 1 ? 1 : $current - 1
                 ]),
             ],
             [
-                "text" => "صفحه".$current."/".$pageCount,
+                "text" => "Page ".$current."/".$pageCount,
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::NoAction->value,
                 ]),
             ],
             [
-                "text" => "   ⏭   ",
+                "text" => "➡️",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::ChangePage->value,
                     "page" => min($current + 1, $pageCount)
@@ -72,19 +72,19 @@ class KeyboardController extends Controller
     {
         return [
             [
-                "text" => "  ارسال رندوم  ",
+                "text" => "  Shuffle 🔀  ",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::ShuffleResult->value,
                 ]),
             ],
             [
-                "text" => "  ارسال صفحه  ",
+                "text" => "All 5 🎧",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::SendPage->value,
                 ]),
             ],
             [
-                "text" => "  حذف نتیجه  ",
+                "text" => "  Close ❌  ",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::CloseKeyboard->value,
                 ]),
