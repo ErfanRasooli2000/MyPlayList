@@ -8,4 +8,6 @@ enum CallBackTypeEnum :string
     case ChangePage = "ChangePage";
     case CloseKeyboard = "CloseKeyboard";
     case NoAction = "NoAction";
+    case ShuffleResult = "ShuffleResult";
+    case SendPage = "SendPage";
 }

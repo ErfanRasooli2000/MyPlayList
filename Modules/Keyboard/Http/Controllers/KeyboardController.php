@@ -27,8 +27,12 @@ class KeyboardController extends Controller
             ];
         }
 
+        $keyboard[] = $this->shuffleBox();
+//        $keyboard[] = $this->countBox();
+
         if ($pagination = $this->createPagination($current , count($result)))
             $keyboard[] = $pagination;
+
 
         return [
             'inline_keyboard' => $keyboard,
@@ -49,15 +53,9 @@ class KeyboardController extends Controller
                 ]),
             ],
             [
-                "text" => "   ".$current."/".$pageCount."   ",
+                "text" => "صفحه".$current."/".$pageCount,
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::NoAction->value,
-                ]),
-            ],
-            [
-                "text" => "   Close   ",
-                "callback_data" => json_encode([
-                    "type" => CallBackTypeEnum::CloseKeyboard->value,
                 ]),
             ],
             [
@@ -65,6 +63,30 @@ class KeyboardController extends Controller
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::ChangePage->value,
                     "page" => min($current + 1, $pageCount)
+                ]),
+            ],
+        ];
+    }
+
+    private function shuffleBox()
+    {
+        return [
+            [
+                "text" => "  ارسال رندوم  ",
+                "callback_data" => json_encode([
+                    "type" => CallBackTypeEnum::ShuffleResult->value,
+                ]),
+            ],
+            [
+                "text" => "  ارسال صفحه  ",
+                "callback_data" => json_encode([
+                    "type" => CallBackTypeEnum::SendPage->value,
+                ]),
+            ],
+            [
+                "text" => "  حذف نتیجه  ",
+                "callback_data" => json_encode([
+                    "type" => CallBackTypeEnum::CloseKeyboard->value,
                 ]),
             ],
         ];

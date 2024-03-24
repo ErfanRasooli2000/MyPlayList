@@ -25,7 +25,7 @@ class TelegramService
         return Http::post($url , $data);
     }
 
-    private function sendAudio(User $user , Song $song)
+    public function sendAudio(User $user , Song $song)
     {
         $url = $this->url . 'sendAudio';
         $data = [

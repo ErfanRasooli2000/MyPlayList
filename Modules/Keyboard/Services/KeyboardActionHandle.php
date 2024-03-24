@@ -22,7 +22,7 @@ class KeyboardActionHandle
 
         switch ($message["type"]){
             case CallBackTypeEnum::SendMusic->value:
-                Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال موزیک." , true);
+                Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال موزیک.");
                 $this->sendAudio($user , $message);
                 break;
             case CallBackTypeEnum::ChangePage->value:
