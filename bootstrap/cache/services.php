@@ -36,6 +36,7 @@
     32 => 'Modules\\Song\\Providers\\SongServiceProvider',
     33 => 'Modules\\Keyboard\\Providers\\KeyboardServiceProvider',
     34 => 'Modules\\PanelUser\\Providers\\PanelUserServiceProvider',
+    35 => 'Modules\\PlayList\\Providers\\PlaylistServiceProvider',
   ),
   'eager' => 
   array (
@@ -60,6 +61,7 @@
     18 => 'Modules\\Song\\Providers\\SongServiceProvider',
     19 => 'Modules\\Keyboard\\Providers\\KeyboardServiceProvider',
     20 => 'Modules\\PanelUser\\Providers\\PanelUserServiceProvider',
+    21 => 'Modules\\PlayList\\Providers\\PlaylistServiceProvider',
   ),
   'deferred' => 
   array (

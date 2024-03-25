@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'telegram_id',
         'username',
+        'step',
     ];
 
     public static function getUserById($id)

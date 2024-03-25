@@ -13,6 +13,7 @@ use Modules\Keyboard\Enums\KeyboardTypeEnum;
 use Modules\Keyboard\Http\Controllers\KeyboardController;
 use Modules\Keyboard\Services\KeyboardActionHandle;
 use Modules\PlayList\Database\Repositories\Contracts\playlistRepositoryInterface;
+use Modules\PlayList\Models\Playlist;
 
 class WebHookController extends Controller
 {
@@ -29,6 +30,8 @@ class WebHookController extends Controller
             return 1;
         }
 
+        $keyboard = new KeyboardController();
+
         $message = new Message($request->getContent());
         if (!$message->chat) return false;
 
@@ -38,20 +41,36 @@ class WebHookController extends Controller
 
             if ($user->step == UserStepEnum::NewPlayList->value)
             {
-                app(playlistRepositoryInterface::class)->create([
-                    "created_by" => $user->id,
-                    "name" => $message->text
-                ]);
+                //todo : why app doesnt work?
+//                app(playlistRepositoryInterface::class)->create([
+//                    "created_by" => $user->id,
+//                    "name" => $message->text
+//                ]);
 
-                $user->update(["step" => UserStepEnum::Search->value]);
 
-                Telegram::sendMsg($user , "پلی لیست با موفقیت ساخته شد");
+                if (in_array($message->text , ["لغو" , "cancel"]))
+                {
+                    $user->update(["step" => UserStepEnum::Search->value]);
+
+                    Telegram::sendMsg($user , "ساخت پلی لیست لغو شد." , $keyboard->createSimpleKeyboard([]));
+                }
+                else
+                {
+                    Playlist::create([
+                        "created_by" => $user->id,
+                        "name" => $message->text
+                    ]);
+
+                    $user->update(["step" => UserStepEnum::Search->value]);
+
+                    Telegram::sendMsg($user , "پلی لیست با موفقیت ساخته شد" , $keyboard->createSimpleKeyboard([]));
+                }
+
+                return 1;
             }
 
             if ($this->keyWordPlayList($message->text))
             {
-                $keyboard = new KeyboardController();
-
                 $message = Telegram::sendMsg($user , "پلی لیست تو" , $keyboard->playListKeyboard());
 
                 $keyboard->createKeyboardDb(
@@ -60,6 +79,10 @@ class WebHookController extends Controller
                     KeyboardTypeEnum::PlayList->value,
                     [],
                 );
+
+                $user->update([
+                    "step" => UserStepEnum::NewPlayList->value
+                ]);
             }
             else
             {

@@ -2,6 +2,7 @@
 
 namespace Modules\Keyboard\Services;
 
+use App\Enums\UserStepEnum;
 use App\Facades\Search;
 use App\Facades\Telegram;
 use App\Models\User;
@@ -15,6 +16,7 @@ class KeyboardActionHandle
 {
     public function reciveCallBack($result)
     {
+        $keyboard = new KeyboardController();
         $call_back_id = $result["id"];
         $message = json_decode($result["data"] , true);
         $message_id = $result["message"]["message_id"];
@@ -46,8 +48,8 @@ class KeyboardActionHandle
                 break;
             case CallBackTypeEnum::NewPlaylist->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال ساخت پلی لیست");
-                Telegram::sendMsg($user , "نام پلی لیست خود را وارد کنید.");
-                $user->update(["step" => "new_play_list"]);
+                Telegram::sendMsg($user , "نام پلی لیست خود را وارد کنید." , $keyboard->createSimpleKeyboard([["لغو"]]));
+                $user->update(["step" => UserStepEnum::NewPlayList->value]);
                 break;
         }
         return 1;
