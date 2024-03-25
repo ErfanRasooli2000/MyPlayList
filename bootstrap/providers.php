@@ -7,4 +7,5 @@ return [
     Modules\Song\Providers\SongServiceProvider::class,
     \Modules\Keyboard\Providers\KeyboardServiceProvider::class,
     \Modules\PanelUser\Providers\PanelUserServiceProvider::class,
+    \Modules\PlayList\Providers\PlaylistServiceProvider::class,
 ];

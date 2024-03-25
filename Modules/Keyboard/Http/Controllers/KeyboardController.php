@@ -126,4 +126,26 @@ class KeyboardController extends Controller
             'resize_keyboard' => true
         ];
     }
+
+    public function playListKeyboard()
+    {
+        $keyboard = [];
+
+        $keyboard[] = [
+            [
+                "text" => "    ➕ New Play List    ",
+                "callback_data" => json_encode([
+                    "type" => CallBackTypeEnum::NewPlaylist->value
+                ])
+            ],
+        ];
+
+        $keyboard[] = $this->createPagination(1,1);
+
+        return [
+            'inline_keyboard' => $keyboard,
+            'resize_keyboard' => true
+        ];
+
+    }
 }

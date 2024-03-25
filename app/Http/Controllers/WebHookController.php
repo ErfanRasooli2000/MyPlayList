@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserStepEnum;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Keyboard\Enums\KeyboardTypeEnum;
 use Modules\Keyboard\Http\Controllers\KeyboardController;
 use Modules\Keyboard\Services\KeyboardActionHandle;
+use Modules\PlayList\Database\Repositories\Contracts\playlistRepositoryInterface;
 
 class WebHookController extends Controller
 {
@@ -34,10 +36,30 @@ class WebHookController extends Controller
         {
             $user = $this->getUser($message);
 
+            if ($user->step == UserStepEnum::NewPlayList->value)
+            {
+                app(playlistRepositoryInterface::class)->create([
+                    "created_by" => $user->id,
+                    "name" => $message->text
+                ]);
+
+                $user->update(["step" => UserStepEnum::Search->value]);
+
+                Telegram::sendMsg($user , "پلی لیست با موفقیت ساخته شد");
+            }
+
             if ($this->keyWordPlayList($message->text))
             {
-                Telegram::sendMsg($user , "پلی لیست تو");
+                $keyboard = new KeyboardController();
 
+                $message = Telegram::sendMsg($user , "پلی لیست تو" , $keyboard->playListKeyboard());
+
+                $keyboard->createKeyboardDb(
+                    $message->json()["result"]["message_id"],
+                    $user,
+                    KeyboardTypeEnum::PlayList->value,
+                    [],
+                );
             }
             else
             {

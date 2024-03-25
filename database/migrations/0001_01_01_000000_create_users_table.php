@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('telegram_id');
             $table->string('username')->nullable();
+            $table->string('step')->default(\App\Enums\UserStepEnum::Search->value);
             $table->timestamps();
         });
 

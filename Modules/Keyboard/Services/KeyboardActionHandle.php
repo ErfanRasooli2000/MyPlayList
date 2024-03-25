@@ -44,6 +44,11 @@ class KeyboardActionHandle
             case CallBackTypeEnum::NoAction->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "paging");
                 break;
+            case CallBackTypeEnum::NewPlaylist->value:
+                Telegram::answerCallBackQuery($user , $call_back_id , "در حال ساخت پلی لیست");
+                Telegram::sendMsg($user , "نام پلی لیست خود را وارد کنید.");
+                $user->update(["step" => "new_play_list"]);
+                break;
         }
         return 1;
     }
