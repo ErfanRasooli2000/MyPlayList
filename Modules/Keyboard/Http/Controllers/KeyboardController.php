@@ -27,8 +27,7 @@ class KeyboardController extends Controller
             ];
         }
 
-        $keyboard[] = $this->shuffleBox();
-//        $keyboard[] = $this->countBox();
+        $keyboard[] = $this->shuffleBox($current);
 
         if ($pagination = $this->createPagination($current , count($result)))
             $keyboard[] = $pagination;
@@ -68,7 +67,7 @@ class KeyboardController extends Controller
         ];
     }
 
-    private function shuffleBox()
+    private function shuffleBox($current)
     {
         return [
             [
@@ -81,6 +80,7 @@ class KeyboardController extends Controller
                 "text" => "All 5 🎧",
                 "callback_data" => json_encode([
                     "type" => CallBackTypeEnum::SendPage->value,
+                    'page' => $current
                 ]),
             ],
             [

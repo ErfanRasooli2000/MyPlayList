@@ -29,6 +29,14 @@ class KeyboardActionHandle
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال جا به جایی.");
                 $this->changePageMessage($user , $message_id , $message);
                 break;
+            case CallBackTypeEnum::SendPage->value:
+                Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال.");
+                $this->getAll($user , $message_id , $message);
+                break;
+            case CallBackTypeEnum::ShuffleResult->value:
+                Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال.");
+                $this->getAll($user , $message_id , $message , 'shuffle' , 7);
+                break;
             case CallBackTypeEnum::CloseKeyboard->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "closing");
                 $this->deleteMessage($user , $message_id);
@@ -74,6 +82,28 @@ class KeyboardActionHandle
         $keyboard = $keyboardController->createSearchResultKeyboard($result , $message["page"]);
 
         Telegram::editInlineMessage($user , $message_id , "انتخاب کنید" , $keyboard);
+    }
+
+    public function getAll($user , $message_id , $message , $type = 'normal' , $count = 5)
+    {
+        $keyboardData = Keyboard::where("user_id" , $user->id)->where("message_id" , $message_id)->first();
+        $keyboardMessage = json_decode($keyboardData->data , true)['message'];
+        $result = Search::search($keyboardMessage);
+
+        switch ($type)
+        {
+            case "normal":
+                $musics = $result->skip(($message["page"]-1)*$count)->take($count);
+                break;
+            case "shuffle":
+                $musics = $result->shuffle()->take($count);
+                break;
+        }
+
+        foreach ($musics as $song)
+        {
+            Telegram::sendAudio($user , $song);
+        }
     }
 
     public function deleteMessage($user , $message_id)
