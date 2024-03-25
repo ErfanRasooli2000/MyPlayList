@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Facades\Telegram;
 use App\Facades\Search;
+use Illuminate\Support\Facades\Log;
 use Modules\Keyboard\Enums\KeyboardTypeEnum;
 use Modules\Keyboard\Http\Controllers\KeyboardController;
 use Modules\Keyboard\Services\KeyboardActionHandle;
@@ -32,26 +33,47 @@ class WebHookController extends Controller
         if ($message->chat->type === 'private')
         {
             $user = $this->getUser($message);
-            $result = Search::search($message->text);
 
-            if (count($result) == 0)
+            if ($this->keyWordPlayList($message->text))
             {
-                Telegram::sendMsg($user , "فایلی یافت نشد." );
-                return 1;
+                Telegram::sendMsg($user , "پلی لیست تو");
+
             }
-
-            $keyboard = new KeyboardController();
-            $response = Telegram::sendMsg($user , "انتخاب کنید." , $keyboard->createSearchResultKeyboard($result));
-
-            $keyboard->createKeyboardDb(
-                $response->json()["result"]["message_id"],
-                $user,
-                KeyboardTypeEnum::SearchResult->value,
-                ["message" => $message->text],
-            );
+            else
+            {
+                $this->searchMusic($user , $message);
+            }
 
             return 1;
         }
+    }
+
+    public function keyWordPlayList($text) :bool
+    {
+        $keyWord = ["/playlist" , "پلی لیست" , 'playlist'];
+
+        return in_array($text , $keyWord);
+    }
+
+    private function searchMusic($user , $message)
+    {
+        $result = Search::search($message->text);
+
+        if (count($result) == 0)
+        {
+            Telegram::sendMsg($user , "فایلی یافت نشد." );
+            return 1;
+        }
+
+        $keyboard = new KeyboardController();
+        $response = Telegram::sendMsg($user , "انتخاب کنید." , $keyboard->createSearchResultKeyboard($result));
+
+        $keyboard->createKeyboardDb(
+            $response->json()["result"]["message_id"],
+            $user,
+            KeyboardTypeEnum::SearchResult->value,
+            ["message" => $message->text],
+        );
     }
 
     private function getUser($message)
@@ -71,4 +93,3 @@ class WebHookController extends Controller
     }
 }
 
-// https://api.telegram.org/bot7177087152:AAG2dftu8r9peT8SovQ-2NRkL4BTWtE3rZE/setWebhook?url=https://erfanrasooli.ir/
