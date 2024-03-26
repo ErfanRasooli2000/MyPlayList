@@ -56,10 +56,12 @@ class WebHookController extends Controller
                 }
                 else
                 {
-                    Playlist::create([
+                    $playList = Playlist::create([
                         "created_by" => $user->id,
                         "name" => $message->text
                     ]);
+
+                    $playList->users()->sync([$user->id]);
 
                     $user->update(["step" => UserStepEnum::Search->value]);
 
@@ -71,7 +73,8 @@ class WebHookController extends Controller
 
             if ($this->keyWordPlayList($message->text))
             {
-                $message = Telegram::sendMsg($user , "پلی لیست تو" , $keyboard->playListKeyboard());
+                $playLists = $user->playlists;
+                $message = Telegram::sendMsg($user , "پلی لیست تو" , $keyboard->playListKeyboard($playLists));
 
                 $keyboard->createKeyboardDb(
                     $message->json()["result"]["message_id"],
@@ -79,10 +82,6 @@ class WebHookController extends Controller
                     KeyboardTypeEnum::PlayList->value,
                     [],
                 );
-
-                $user->update([
-                    "step" => UserStepEnum::NewPlayList->value
-                ]);
             }
             else
             {

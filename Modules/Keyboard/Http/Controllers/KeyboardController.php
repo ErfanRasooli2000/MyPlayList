@@ -127,7 +127,7 @@ class KeyboardController extends Controller
         ];
     }
 
-    public function playListKeyboard()
+    public function playListKeyboard($playLists = [] , $current = 1)
     {
         $keyboard = [];
 
@@ -140,7 +140,18 @@ class KeyboardController extends Controller
             ],
         ];
 
-        $keyboard[] = $this->createPagination(1,1);
+        if ($playLists != [])
+            foreach ($playLists as $playList)
+                $keyboard[] = [
+                    [
+                        "text" => "    ".$playList->name."    ",
+                        "callback_data" => json_encode([
+                            "type" => CallBackTypeEnum::playlist->value
+                        ])
+                    ],
+                ];
+
+        $keyboard[] = $this->createPagination($current , count($playLists));
 
         return [
             'inline_keyboard' => $keyboard,

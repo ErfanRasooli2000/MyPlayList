@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\PlayList\Models\Playlist;
 
 class User extends Authenticatable
 {
@@ -25,5 +26,10 @@ class User extends Authenticatable
     public static function getUserById($id)
     {
         return User::where("telegram_id", (string) $id)->get()->first();
+    }
+
+    public function playlists()
+    {
+        return $this->belongsToMany(Playlist::class , 'playlist-user');
     }
 }

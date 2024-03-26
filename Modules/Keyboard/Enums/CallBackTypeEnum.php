@@ -11,4 +11,6 @@ enum CallBackTypeEnum :string
     case ShuffleResult = "ShuffleResult";
     case SendPage = "SendPage";
     case NewPlaylist = "NewPlaylist";
+
+    case playlist = "playlist";
 }
