@@ -25,7 +25,8 @@ class KeyboardActionHandle
         switch ($message["type"]){
             case CallBackTypeEnum::SendMusic->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال ارسال موزیک.");
-                $this->sendAudio($user , $message);
+                $song = Song::where("id" , $message)->first();
+                $this->sendAudio($user , $song);
                 break;
             case CallBackTypeEnum::ChangePage->value:
                 Telegram::answerCallBackQuery($user , $call_back_id , "در حال جا به جایی.");
@@ -55,9 +56,8 @@ class KeyboardActionHandle
         return 1;
     }
 
-    public function sendAudio($user , $message)
+    public function sendAudio($user , $song)
     {
-        $song = Song::where("id" , $message)->first();
         $response = Telegram::sendAudio($user , $song);
 
         if ($response->successful())
@@ -109,7 +109,7 @@ class KeyboardActionHandle
 
         foreach ($musics as $song)
         {
-            Telegram::sendAudio($user , $song);
+            $this->sendAudio($user , $song);
         }
     }
 
